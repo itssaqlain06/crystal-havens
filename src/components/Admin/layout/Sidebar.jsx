@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const currentLocation = location.pathname;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -10,6 +13,7 @@ export default function Sidebar() {
       navigate("/admin/login");
     }
   }, []);
+
   const imageUrl = process.env.PUBLIC_URL;
 
   return (
@@ -37,21 +41,72 @@ export default function Sidebar() {
             </div>
           </div>
           <div className="navbar-nav w-100">
-            <Link to="/admin" className="nav-item nav-link active">
+            <Link
+              to="/admin"
+              className={`nav-item nav-link ${
+                currentLocation == "/admin" ? "active" : null
+              }`}
+            >
               <i className="fa fa-tachometer-alt me-2"></i>Dashboard
             </Link>
 
-            <Link to="/admin/users" className="nav-item nav-link">
+            <Link
+              to="/admin/users"
+              className={`nav-item nav-link ${
+                currentLocation == "/admin/users" ||
+                currentLocation === "/admin/manageUser"
+                  ? "active"
+                  : null
+              }`}
+            >
               <i className="fa fa-user"></i>&nbsp; Users
             </Link>
-            <Link to="/admin/hotels" className="nav-item nav-link">
+            <Link
+              to="/admin/hotels"
+              className={`nav-item nav-link ${
+                currentLocation === "/admin/hotels" ||
+                currentLocation === "/admin/manageHotel" ||
+                currentLocation === "/admin/hotel/update" ||
+                currentLocation === "/admin/hotel/add"
+                  ? "active"
+                  : null
+              }`}
+            >
               <i className="fas fa-building"></i>&nbsp; Hotels
             </Link>
-            <Link to="/admin/rooms" className="nav-item nav-link">
+
+            <Link
+              to="/admin/rooms"
+              className={`nav-item nav-link ${
+                currentLocation === "/admin/rooms" ||
+                currentLocation === "/admin/manageRoom" ||
+                currentLocation === "/admin/room/update" ||
+                currentLocation === "/admin/room/add"
+                  ? "active"
+                  : null
+              }`}
+            >
               <i className="fas fa-bed"></i>&nbsp; Rooms
             </Link>
-            <Link to="/admin/bookings" className="nav-item nav-link">
+            <Link
+              to="/admin/bookings"
+              className={`nav-item nav-link ${
+                currentLocation == "/admin/bookings" ||
+                currentLocation === "/admin/viewBooking"
+                ? "active" : null
+              }`}
+            >
               <i className="fas fa-person-booth"></i>&nbsp; Bookings
+            </Link>
+            <Link
+              to="/admin/reservations"
+              className={`nav-item nav-link ${
+                currentLocation == "/admin/reservations" ||
+                currentLocation === "/admin/viewReservation"
+                ? "active" : null
+              }`}
+            >
+              <i className="fas fa-headset"></i>&nbsp; Reservations
             </Link>
           </div>
         </nav>

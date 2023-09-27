@@ -5,8 +5,8 @@ import "../../App.css";
 import Footer from "./layout/Footer";
 import Header from "./layout/Header";
 
-export default function Bookings() {
-  const [booking, setBooking] = useState(null);
+export default function Reservations() {
+  const [reservation, setReservation] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate(null);
 
@@ -17,10 +17,10 @@ export default function Bookings() {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/booking", { headers })
+      .get("http://127.0.0.1:8000/api/reservation", { headers })
       .then((response) => {
         const data = response.data.success.data;
-        setBooking(data);
+        setReservation(data);
         setError(null);
       })
       .catch((err) => {
@@ -28,13 +28,15 @@ export default function Bookings() {
       });
   }, []);
 
-  const viewBooking = (index) => {
-    navigate(`/admin/viewBooking?${index}`);
+  const viewReservation = (index) => {
+    navigate(`/admin/viewReservation?${index}`);
   };
 
-  const updateRoom = (index) => {
-    navigate(`/admin/room/update?${index}`);
+  const updateReservation = (index) => {
+    navigate(`/admin/reservation/update?${index}`);
   };
+
+
   return (
     <div className="container-xxl position-relative bg-white d-flex p-0">
       <div className="content">
@@ -42,7 +44,7 @@ export default function Bookings() {
         <div className="container-fluid pt-4 px-4">
           <div className="col-sm-12 col-xl-12">
             <div className="bg-light rounded h-100 p-4">
-              <h3 className="mb-4 text-color">Bookings</h3>
+              <h3 className="mb-4 text-color">Reservation</h3>
               <table className="table table-hover">
                 <thead>
                   <tr>
@@ -55,8 +57,8 @@ export default function Bookings() {
                   </tr>
                 </thead>
                 <tbody>
-                  {booking !== null &&
-                    booking.map((room, index) => (
+                  {reservation !== null &&
+                    reservation.map((room, index) => (
                       <tr key={index}>
                         <th className="py-3" scope="row">
                           {index + 1}
@@ -69,14 +71,14 @@ export default function Bookings() {
                           <button
                             type="button"
                             className="btn btn-outline-success m-2"
-                            onClick={() => viewBooking(room.id)}
+                            onClick={() => viewReservation(room.id)}
                           >
                             View
                           </button>
                           <button
                             type="button"
                             className="btn btn-outline-warning m-2"
-                            onClick={() => updateRoom(room.id)}
+                            onClick={() => updateReservation(room.id)}
                           >
                             Update
                           </button>
