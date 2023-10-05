@@ -11,7 +11,7 @@ export default function UpdateHotel() {
     name: "",
     email: "",
     phone: "",
-    starRating: "",
+    star_rating: "",
     country: "",
     state: "",
     city: "",
@@ -55,6 +55,9 @@ export default function UpdateHotel() {
         .catch((error) => {
           setError(error.message);
         });
+    }else{
+      alert("You")
+      // navigate("/admin/hotel")
     }
   }, [hotelId, searchParam]);
 
@@ -163,9 +166,9 @@ export default function UpdateHotel() {
                   <div className="form-floating mb-3">
                     <input
                       onChange={(e) =>
-                        setHotel({ ...hotel, starRating: e.target.value })
+                        setHotel({ ...hotel, star_rating: e.target.value })
                       }
-                      value={hotel.starRating}
+                      value={hotel.star_rating}
                       type="number"
                       className="form-control"
                       id="floatingStar"
@@ -173,8 +176,8 @@ export default function UpdateHotel() {
                     />
                     <label htmlFor="floatingStar">Star Rating</label>
                     <span className="loginErrors">
-                      {errors.error && errors.error.starRating
-                        ? errors.error.starRating
+                      {errors.error && errors.error.star_rating
+                        ? errors.error.star_rating
                         : null}
                     </span>
                   </div>

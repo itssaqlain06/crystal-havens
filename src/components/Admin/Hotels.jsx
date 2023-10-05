@@ -6,8 +6,8 @@ import Footer from "./layout/Footer";
 import Header from "./layout/Header";
 
 export default function Hotels() {
-  const [hotels, setHotels] = useState(null);
-  const [error, setError] = useState(null);
+  const [hotels, setHotels] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate(null);
 
   const token = localStorage.getItem("token");
@@ -24,12 +24,13 @@ export default function Hotels() {
         setError(null);
       })
       .catch((err) => {
-        setError(err.message);
+        setError(err.response);
+        setHotels("");
       });
   }, []);
 
   const viewHotels = (index) => {
-    navigate(`/admin/manageHotel?${index}`);
+    navigate(`/admin/hotel/view?${index}`);
   };
 
   const addHotel = () => {
@@ -55,7 +56,8 @@ export default function Hotels() {
           <div className="col-sm-12 col-xl-12">
             <div className="bg-light rounded h-100 p-4">
               <h3 className="mb-4 text-color">Hotels</h3>
-              <table className="table table-hover">
+              {hotels !=="" && (
+                <table className="table table-hover">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
@@ -95,6 +97,9 @@ export default function Hotels() {
                     ))}
                 </tbody>
               </table>
+              )}
+              <span className="serverError">{error && error.statusText ? error.statusText : null}</span>
+              
             </div>
           </div>
         </div>

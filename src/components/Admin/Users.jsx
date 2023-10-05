@@ -23,59 +23,62 @@ export default function Users() {
         setError(null);
       })
       .catch((err) => {
-        setError(err.message);
+        setError(err.response);
       });
   }, []);
 
   const viewUser = (index) => {
-    navigate(`/admin/manageUser?${index}`);
+    navigate(`/admin/user/view?${index}`);
   };
 
   return (
     <div className="container-xxl position-relative bg-white d-flex p-0">
       <div className="content">
-      <Header />
+        <Header />
         <div className="container-fluid pt-4 px-4">
           <div className="col-sm-12 col-xl-12">
             <div className="bg-light rounded h-100 p-4">
               <h3 className="mb-4 text-color">Users</h3>
-              <table className="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {users !== null &&
-                    users.map((user, index) => (
-                      <tr key={index}>
-                        <th className="py-3" scope="row">
-                          {index + 1}
-                        </th>
-                        <td className="py-3">{user.name}</td>
-                        <td className="py-3">{user.email}</td>
-                        <td className="py-3">{user.phone}</td>
-                        <td>
-                          {index !== 0 && index !== 1 && (
-                            <>
-                              <button
-                                type="button"
-                                className="btn btn-outline-success m-2"
-                                onClick={() => viewUser(user.id)}
-                              >
-                                View
-                              </button>
-                            </>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
+             {users !== null && (
+               <table className="table table-hover">
+               <thead>
+                 <tr>
+                   <th scope="col">#</th>
+                   <th scope="col">Name</th>
+                   <th scope="col">Email</th>
+                   <th scope="col">Phone</th>
+                   <th scope="col">Action</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 {users !== null &&
+                   users.map((user, index) => (
+                     <tr key={index}>
+                       <th className="py-3" scope="row">
+                         {index + 1}
+                       </th>
+                       <td className="py-3">{user.name}</td>
+                       <td className="py-3">{user.email}</td>
+                       <td className="py-3">{user.phone}</td>
+                       <td>
+                         {index !== 0 && index !== 1 && (
+                           <>
+                             <button
+                               type="button"
+                               className="btn btn-outline-success m-2"
+                               onClick={() => viewUser(user.id)}
+                             >
+                               View
+                             </button>
+                           </>
+                         )}
+                       </td>
+                     </tr>
+                   ))}
+               </tbody>
+             </table>
+             )}
+              <span className="serverError">{error && error.statusText ? error.statusText : null}</span>
             </div>
           </div>
         </div>

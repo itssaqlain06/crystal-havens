@@ -5,7 +5,7 @@ import "../../App.css";
 import Footer from "./layout/Footer";
 import Header from "./layout/Header";
 
-export default function ManageUser() {
+export default function ViewUser() {
   const [userId, setUserId] = useState(null);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
@@ -34,8 +34,8 @@ export default function ManageUser() {
           setUser(data);
           setError(null);
         })
-        .catch((error) => {
-          setError(error.message);
+        .catch((err) => {
+          setError(err.response);
         });
     }
   }, [userId, searchParam]);
@@ -51,8 +51,9 @@ export default function ManageUser() {
           navigate("/admin/users");
         }, 3000);
       })
-      .catch((error) => {
-        setError(error.message);
+      .catch((err) => {
+        console.log(err)
+        setError(err);
       });
   };
 
@@ -63,7 +64,7 @@ export default function ManageUser() {
         <div className="container-fluid pt-4 px-4">
           <div className="col-sm-12 col-xl-12">
             <div className="bg-light rounded h-100 p-4">
-              <h3 className="mb-4 text-color">Manage User</h3>
+              <h3 className="mb-4 text-color">View User</h3>
               <span className="delSuccess">
                 {userDel && userDel.message ? userDel.message : null}
               </span>
@@ -107,6 +108,7 @@ export default function ManageUser() {
                   </tbody>
                 </table>
               )}
+              <span className="serverError">{error && error.statusText ? error.statusText : null}</span>
             </div>
           </div>
         </div>

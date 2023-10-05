@@ -35,7 +35,7 @@ export default function ManageHotel() {
           setError(null);
         })
         .catch((error) => {
-          setError(error.message);
+          setError(error.response);
         });
     }
   }, [hotelId, searchParam]);
@@ -52,7 +52,8 @@ export default function ManageHotel() {
         }, 3000);
       })
       .catch((error) => {
-        setError(error.message);
+        setError(error);
+        setHotel("");
       });
   };
 
@@ -63,7 +64,7 @@ export default function ManageHotel() {
         <div className="container-fluid pt-4 px-4">
           <div className="col-sm-12 col-xl-12">
             <div className="bg-light rounded h-100 p-4">
-              <h3 className="mb-4 text-color">Manage Hotel</h3>
+              <h3 className="mb-4 text-color">View Hotel</h3>
               <span className="delSuccess">
                 {hotelDel && hotelDel.message ? hotelDel.message : null}
               </span>
@@ -81,7 +82,7 @@ export default function ManageHotel() {
                       </th>
                       <th scope="col">Address</th>
                       <th scope="col">Description</th>
-                      <th scope="col">Created At</th>
+                      <th scope="col" width="100px">Created At</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -96,8 +97,7 @@ export default function ManageHotel() {
                         <td className="py-3">{hotel.phone}</td>
                         <td className="py-3">{hotel.star_rating}</td>
                         <td className="py-3">
-                          {hotel.country} <br /> {hotel.state} <br />
-                          {hotel.city}
+                          {hotel.country} / <br /> {hotel.state} <br /> / {hotel.city}
                         </td>
                         <td className="py-3">{hotel.address}</td>
                         <td className="py-3">{hotel.description}</td>
@@ -120,6 +120,7 @@ export default function ManageHotel() {
                   </tbody>
                 </table>
               )}
+            <span className="serverError">{error && error.statusText ? error.statusText : null}</span>
             </div>
           </div>
         </div>

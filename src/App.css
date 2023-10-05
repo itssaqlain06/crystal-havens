@@ -14,6 +14,84 @@
   font-size: 18px;
   margin-left: 2px;
 }
-.text-color{
-  color:#009CFF;
+.text-color {
+  color: #009cff;
+}
+.cancelBooking {
+  color: #009cff;
+  font-size: 18px;
+  margin-left: 2px;
+}
+.restoreBooking {
+  color: green;
+  font-size: 18px;
+  margin-left: 2px;
+}
+.serverError {
+  color: red;
+  font-size: 18px;
+  margin-left: 2px;
+}
+.bg-light {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.button-color {
+  background-color: #fe0000;
+}
+.loginColor:hover {
+  color: #fe0000;
+}
+.roomData {
+  font-size: 18px;
+  color: #fe0000;
+}
+#serv_hover {
+  border-radius: 3px;
+}
+.roomImg {
+  border-radius: 3px;
+  height: 350px;
+  transition: .3s ease-in-out;
+}
+.roomImg:hover{
+  padding: 5px;
+  transform: scale(1.1);
+}
+
+.custom-section {
+  width: 100%;
+}
+@media (max-width: 767.98px) {
+  .border-sm-start-none {
+    border-left: none !important;
+  }
+}
+
+
+.custom-table-responsive {
+  max-width: 50%;
+}
+
+.roomImgParent{
+  margin-left: 15px;
+  padding: 15px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,.75);
+}
+.buyNowSection{
+  margin-left: 10px;  
+
+}
+h2{
+  font-weight: bold;
+}
+.webColor{
+  background-color: #fe0000;
+}
+.starColor{
+  color: #fe0000;
+}
+.our_room{
+  margin-top: 0!important;
 }

@@ -51,10 +51,10 @@ export default function Sidebar() {
             </Link>
 
             <Link
-              to="/admin/users"
+              to="/admin/user"
               className={`nav-item nav-link ${
-                currentLocation == "/admin/users" ||
-                currentLocation === "/admin/manageUser"
+                currentLocation == "/admin/user" ||
+                currentLocation === "/admin/user/view"
                   ? "active"
                   : null
               }`}
@@ -62,10 +62,10 @@ export default function Sidebar() {
               <i className="fa fa-user"></i>&nbsp; Users
             </Link>
             <Link
-              to="/admin/hotels"
+              to="/admin/hotel"
               className={`nav-item nav-link ${
-                currentLocation === "/admin/hotels" ||
-                currentLocation === "/admin/manageHotel" ||
+                currentLocation === "/admin/hotel" ||
+                currentLocation === "/admin/hotel/view" ||
                 currentLocation === "/admin/hotel/update" ||
                 currentLocation === "/admin/hotel/add"
                   ? "active"
@@ -76,10 +76,10 @@ export default function Sidebar() {
             </Link>
 
             <Link
-              to="/admin/rooms"
+              to="/admin/room"
               className={`nav-item nav-link ${
-                currentLocation === "/admin/rooms" ||
-                currentLocation === "/admin/manageRoom" ||
+                currentLocation === "/admin/room" ||
+                currentLocation === "/admin/room/view" ||
                 currentLocation === "/admin/room/update" ||
                 currentLocation === "/admin/room/add"
                   ? "active"
@@ -89,20 +89,20 @@ export default function Sidebar() {
               <i className="fas fa-bed"></i>&nbsp; Rooms
             </Link>
             <Link
-              to="/admin/bookings"
+              to="/admin/booking"
               className={`nav-item nav-link ${
-                currentLocation == "/admin/bookings" ||
-                currentLocation === "/admin/viewBooking"
+                currentLocation == "/admin/booking" ||
+                currentLocation === "/admin/booking/view"
                 ? "active" : null
               }`}
             >
               <i className="fas fa-person-booth"></i>&nbsp; Bookings
             </Link>
             <Link
-              to="/admin/reservations"
+              to="/admin/reservation"
               className={`nav-item nav-link ${
-                currentLocation == "/admin/reservations" ||
-                currentLocation === "/admin/viewReservation"
+                currentLocation == "/admin/reservation" ||
+                currentLocation === "/admin/reservation/view"
                 ? "active" : null
               }`}
             >

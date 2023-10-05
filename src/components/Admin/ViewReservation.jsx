@@ -11,7 +11,6 @@ export default function ViewReservation() {
   const [error, setError] = useState(null);
   const [reservationDel, setReservationDel] = useState(null);
   const navigate = useNavigate();
-
   const [searchParam] = useSearchParams();
 
   const token = localStorage.getItem("token");
@@ -35,27 +34,27 @@ export default function ViewReservation() {
           setError(null);
         })
         .catch((error) => {
-          setError(error.message);
+          setError(error.response);
         });
     }
   }, [reservationId, searchParam]);
 
   const deleteUser = (index) => {
     axios
-      .delete(`http://127.0.0.1:8000/api/booking/delete/${index}`)
+      .delete(`http://127.0.0.1:8000/api/reservation/delete/${index}`)
       .then((response) => {
         const del = response.data.success;
         setReservationDel(del);
         setReservation(null);
         setTimeout(() => {
-          navigate("/admin/bookings");
+          navigate("/admin/reservation");
         }, 3000);
       })
       .catch((error) => {
-        setError(error.message);
+        setError(error.response);
       });
-  };
 
+    };
   return (
     <div className="container-xxl position-relative bg-white d-flex p-0">
       <div className="content">
@@ -63,7 +62,7 @@ export default function ViewReservation() {
         <div className="container-fluid pt-4 px-4">
           <div className="col-sm-12 col-xl-12">
             <div className="bg-light rounded h-100 p-4">
-              <h3 className="mb-4 text-color">Manage Reservation</h3>
+              <h3 className="mb-4 text-color">View Reservation</h3>
               <span className="delSuccess">
                 {reservationDel && reservationDel.message ? reservationDel.message : null}
               </span>
@@ -111,6 +110,7 @@ export default function ViewReservation() {
                   </tbody>
                 </table>
               )}
+              <span className="serverError">{error && error.statusText ? error.statusText : null}</span>
             </div>
           </div>
         </div>

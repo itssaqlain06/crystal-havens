@@ -24,16 +24,16 @@ export default function Bookings() {
         setError(null);
       })
       .catch((err) => {
-        setError(err.message);
+        setError(err.response);
       });
   }, []);
 
   const viewBooking = (index) => {
-    navigate(`/admin/viewBooking?${index}`);
+    navigate(`/admin/booking/view?${index}`);
   };
 
   const updateRoom = (index) => {
-    navigate(`/admin/room/update?${index}`);
+    navigate(`/admin/booking/update?${index}`);
   };
   return (
     <div className="container-xxl position-relative bg-white d-flex p-0">
@@ -43,10 +43,12 @@ export default function Bookings() {
           <div className="col-sm-12 col-xl-12">
             <div className="bg-light rounded h-100 p-4">
               <h3 className="mb-4 text-color">Bookings</h3>
-              <table className="table table-hover">
+              {booking !==null && (
+                <table className="table table-hover">
                 <thead>
                   <tr>
                     <th scope="col" width="20px">#</th>
+                    <th scope="col" width="20px">User</th>
                     <th scope="col" width="20px">Room No</th>
                     <th scope="col" width="20px">Start Date</th>
                     <th scope="col" width="20px">End Date</th>
@@ -61,6 +63,7 @@ export default function Bookings() {
                         <th className="py-3" scope="row">
                           {index + 1}
                         </th>
+                        <td className="py-3">{room.user_id}</td>
                         <td className="py-3">{room.room_id}</td>
                         <td className="py-3">{room.start_date}</td>
                         <td className="py-3">{room.end_date}</td>
@@ -85,6 +88,8 @@ export default function Bookings() {
                     ))}
                 </tbody>
               </table>
+              )}
+              <span className="serverError">{error && error.statusText ? error.statusText : null}</span>
             </div>
           </div>
         </div>

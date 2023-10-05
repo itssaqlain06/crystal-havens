@@ -1,54 +1,61 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import '../../App.css';
+import "../../App.css";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
-    
+    const [catchError, setCatchError] = useState("");
+
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        const token = localStorage.getItem('token');
-        if(token){
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
             navigate("/admin");
         }
-    },[])
+    }, []);
 
-
-     const login = async (e) => {
+    const login = async (e) => {
         e.preventDefault();
-        let items = {email, password};
-        try{
-            let response = await fetch("http://127.0.0.1:8000/api/user/login",{
-            method : "POST",
-            body : JSON.stringify(items),
-            headers : {
-                "Content-Type" : "application/json",
-                "Accept" : "application/json"
+        setError("");
+        setCatchError("");
+        let items = { email, password };
+        try {
+            let response = await fetch("http://127.0.0.1:8000/api/user/login", {
+                method: "POST",
+                body: JSON.stringify(items),
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+            });
+            if (response.ok) {
+                let result = await response.json();
+                setSuccess(result.success);
+                if (
+                    items.email !== "itssaqlain06@gmail.com" &&
+                    items.email !== "admin123@gmail.com"
+                ) {
+                    setError({ OnlyAdmin: "Only Admin is allowed to access Dashboard" });
+                } else {
+                    localStorage.setItem(
+                        "token",
+                        JSON.stringify(result.success.authorization)
+                    );
+                    navigate("/admin");
+                }
+            } else {
+                let errorData = await response.json();
+                setError(errorData.errors);
+                setSuccess("");
             }
-        });
-        if(response.ok){
-            let result = await response.json();
-            setSuccess(result.success);
-            if(items.email !=="itssaqlain06@gmail.com" && items.email !=="admin123@gmail.com"){
-                setError({OnlyAdmin : "Only Admin is allowed to access Dashboard"});
-            }else{
-                localStorage.setItem('token',JSON.stringify(result.success.authorization));
-                navigate("/admin");
-            }
-        }else{
-            let errorData = await response.json();
-            setError(errorData.errors);
-            setSuccess("");
+        } catch (error) {
+            console.log(error);
+            setCatchError(error)
         }
-        }catch(error){
-            setError("An error occurred. Please try again later.");
-            console.log("Login Error" + error);
-        }
-
     };
 
     return (
@@ -74,12 +81,13 @@ export default function Login() {
                                         type="email"
                                         className="form-control"
                                         id="floatingInput"
-                                        placeholder="name@example.com" 
-                                        onChange={(e) => setEmail(e.target.value)} value={email}
+                                        placeholder="name@example.com"
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        value={email}
                                     />
                                     <label htmlFor="floatingInput">Email address</label>
                                     <span className="loginErrors">
-                                            {error && error.email ? error.email: null}
+                                        {error && error.email ? error.email : null}
                                     </span>
                                 </div>
                                 <div className="form-floating mb-4">
@@ -88,11 +96,12 @@ export default function Login() {
                                         className="form-control"
                                         id="floatingPassword"
                                         placeholder="Password"
-                                        onChange={(e) => setPassword(e.target.value)} value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        value={password}
                                     />
                                     <label htmlFor="floatingPassword">Password</label>
                                     <span className="loginErrors">
-                                            {error && error.password ? error.password : null}
+                                        {error && error.password ? error.password : null}
                                     </span>
                                 </div>
                                 <button
@@ -107,6 +116,8 @@ export default function Login() {
                                 <span className="loginErrors">
                                     {error && error.error ? error.error : null}
                                     {error && error.OnlyAdmin ? error.OnlyAdmin : null}
+                                    {error && error.message ? error.message : null}
+                                    {catchError && catchError.message ? catchError.message : null}
                                 </span>
                             </form>
                         </div>

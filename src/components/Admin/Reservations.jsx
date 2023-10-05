@@ -24,12 +24,12 @@ export default function Reservations() {
         setError(null);
       })
       .catch((err) => {
-        setError(err.message);
+        setError(err.response);
       });
   }, []);
 
   const viewReservation = (index) => {
-    navigate(`/admin/viewReservation?${index}`);
+    navigate(`/admin/reservation/view?${index}`);
   };
 
   const updateReservation = (index) => {
@@ -45,48 +45,53 @@ export default function Reservations() {
           <div className="col-sm-12 col-xl-12">
             <div className="bg-light rounded h-100 p-4">
               <h3 className="mb-4 text-color">Reservation</h3>
-              <table className="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col" width="20px">#</th>
-                    <th scope="col" width="20px">Room No</th>
-                    <th scope="col" width="20px">Start Date</th>
-                    <th scope="col" width="20px">End Date</th>
-                    <th scope="col" width="20px">Number Of Guests</th>
-                    <th scope="col" width="20px">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {reservation !== null &&
-                    reservation.map((room, index) => (
-                      <tr key={index}>
-                        <th className="py-3" scope="row">
-                          {index + 1}
-                        </th>
-                        <td className="py-3">{room.room_id}</td>
-                        <td className="py-3">{room.start_date}</td>
-                        <td className="py-3">{room.end_date}</td>
-                        <td className="py-3">{room.number_of_guests}</td>
-                        <td>
-                          <button
-                            type="button"
-                            className="btn btn-outline-success m-2"
-                            onClick={() => viewReservation(room.id)}
-                          >
-                            View
-                          </button>
-                          <button
-                            type="button"
-                            className="btn btn-outline-warning m-2"
-                            onClick={() => updateReservation(room.id)}
-                          >
-                            Update
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
+              {reservation !== null && (
+                <table className="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col" width="20px">#</th>
+                      <th scope="col" width="20px">Room No</th>
+                      <th scope="col" width="20px">Start Date</th>
+                      <th scope="col" width="20px">End Date</th>
+                      <th scope="col" width="20px">Number Of Guests</th>
+                      <th scope="col" width="20px">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {reservation !== null &&
+                      reservation.map((room, index) => (
+                        <tr key={index}>
+                          <th className="py-3" scope="row">
+                            {index + 1}
+                          </th>
+                          <td className="py-3">{room.room_id}</td>
+                          <td className="py-3">{room.start_date}</td>
+                          <td className="py-3">{room.end_date}</td>
+                          <td className="py-3">{room.number_of_guests}</td>
+                          <td>
+                            <button
+                              type="button"
+                              className="btn btn-outline-success m-2"
+                              onClick={() => viewReservation(room.id)}
+                            >
+                              View
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-outline-warning m-2"
+                              onClick={() => updateReservation(room.id)}
+                            >
+                              Update
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              )}
+
+              <span className="serverError">{error && error.statusText ? error.statusText : null}</span>
+
             </div>
           </div>
         </div>

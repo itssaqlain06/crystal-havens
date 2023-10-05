@@ -21,7 +21,8 @@ export default function AddHotel() {
   const navigate = useNavigate();
 
 
-  const handleAddHotel = async () => { 
+  const handleAddHotel = async () => {
+    setErrors("");
     const fields = {
       name,
       email,
@@ -46,13 +47,12 @@ export default function AddHotel() {
       });
       if (response.ok) {
         let result = await response.json();
-        console.log(result.success);
+        setSuccess(result);
         setErrors("");
-        navigate('/admin/hotels');
+        navigate('/admin/hotel');
       } else {
         let failed = await response.json();
         setErrors(failed.errors);
-        console.log(failed.errors);
         setSuccess("");
       }
     } catch (error) {
@@ -80,8 +80,8 @@ export default function AddHotel() {
                     />
                     <label htmlFor="floatingName">Name</label>
                     <span className="loginErrors">
-                      {errors.error && errors.error.name
-                        ? errors.error.name
+                      {errors && errors.name
+                        ? errors.name
                         : null}
                     </span>
                   </div>
@@ -96,8 +96,8 @@ export default function AddHotel() {
                     />
                     <label htmlFor="floatingEmail">Email address</label>
                     <span className="loginErrors">
-                      {errors.error && errors.error.email
-                        ? errors.error.email
+                      {errors && errors.email
+                        ? errors.email
                         : null}
                     </span>
                   </div>
@@ -112,8 +112,8 @@ export default function AddHotel() {
                     />
                     <label htmlFor="floatingPhone">Phone</label>
                     <span className="loginErrors">
-                      {errors.error && errors.error.phone
-                        ? errors.error.phone
+                      {errors && errors.phone
+                        ? errors.phone
                         : null}
                     </span>
                   </div>
@@ -128,8 +128,8 @@ export default function AddHotel() {
                     />
                     <label htmlFor="floatingStar">Star Rating</label>
                     <span className="loginErrors">
-                      {errors.error && errors.error.star_rating
-                        ? errors.error.star_rating
+                      {errors && errors.star_rating
+                        ? errors.star_rating
                         : null}
                     </span>
                   </div>
@@ -144,8 +144,8 @@ export default function AddHotel() {
                     />
                     <label htmlFor="floatingCountry">Country</label>
                     <span className="loginErrors">
-                      {errors.error && errors.error.country
-                        ? errors.error.country
+                      {errors && errors.country
+                        ? errors.country
                         : null}
                     </span>
                   </div>
@@ -160,8 +160,8 @@ export default function AddHotel() {
                     />
                     <label htmlFor="floatingState">State</label>
                     <span className="loginErrors">
-                      {errors.error && errors.error.state
-                        ? errors.error.state
+                      {errors && errors.state
+                        ? errors.state
                         : null}
                     </span>
                   </div>
@@ -176,8 +176,8 @@ export default function AddHotel() {
                     />
                     <label htmlFor="floatingCity">City</label>
                     <span className="loginErrors">
-                      {errors.error && errors.error.city
-                        ? errors.error.city
+                      {errors && errors.city
+                        ? errors.city
                         : null}
                     </span>
                   </div>
@@ -192,8 +192,8 @@ export default function AddHotel() {
                     />
                     <label htmlFor="floatingAddress">Address</label>
                     <span className="loginErrors">
-                      {errors.error && errors.error.address
-                        ? errors.error.address
+                      {errors && errors.address
+                        ? errors.address
                         : null}
                     </span>
                   </div>
@@ -208,8 +208,8 @@ export default function AddHotel() {
                     ></textarea>
                     <label htmlFor="floatingDescription">Description</label>
                     <span className="loginErrors">
-                      {errors.error && errors.error.description
-                        ? errors.error.description
+                      {errors && errors.description
+                        ? errors.description
                         : null}
                     </span>
                   </div>
@@ -223,6 +223,7 @@ export default function AddHotel() {
                     </div>
                   </div>
                 </form>
+                    <span className="serverError">{errors && errors.message ? "Interval Server Error" : null}</span>
               </div>
             </div>
           </div>

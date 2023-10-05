@@ -6,8 +6,8 @@ import Footer from "./layout/Footer";
 import Header from "./layout/Header";
 
 export default function Rooms() {
-  const [rooms, setRooms] = useState(null);
-  const [error, setError] = useState(null);
+  const [rooms, setRooms] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate(null);
 
   const token = localStorage.getItem("token");
@@ -21,15 +21,16 @@ export default function Rooms() {
       .then((response) => {
         const data = response.data.success.details;
         setRooms(data);
-        setError(null);
+        setError("");
       })
       .catch((err) => {
-        setError(err.message);
+        setError(err.response);
+        setRooms("")
       });
   }, []);
 
   const viewRoom = (index) => {
-    navigate(`/admin/manageRoom?${index}`);
+    navigate(`/admin/room/view?${index}`);
   };
 
   const updateRoom = (index) => {
@@ -55,14 +56,16 @@ export default function Rooms() {
           <div className="col-sm-12 col-xl-12">
             <div className="bg-light rounded h-100 p-4">
               <h3 className="mb-4 text-color">Rooms</h3>
-              <table className="table table-hover">
+              {rooms !== "" && (
+                <table className="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col" width="20px">#</th>
-                    <th scope="col" width="20px">Room No</th>
-                    <th scope="col" width="20px">type</th>
-                    <th scope="col" width="20px">Price</th>
-                    <th scope="col" width="20px">Action</th>
+                    <th scope="col" width="50px">#</th>
+                    <th scope="col" width="50px">Room No</th>
+                    <th scope="col" width="50px">type</th>
+                    <th scope="col" width="50px">Price</th>
+                    <th scope="col" width="50px">Available</th>
+                    <th scope="col" width="50p">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -75,6 +78,7 @@ export default function Rooms() {
                         <td className="py-3">{room.room_no}</td>
                         <td className="py-3">{room.type}</td>
                         <td className="py-3">{room.price}</td>
+                        <td className="py-3">{room && room.is_available ? "✓" : "✕"}</td>
                         <td>
                           <button
                             type="button"
@@ -95,6 +99,8 @@ export default function Rooms() {
                     ))}
                 </tbody>
               </table>
+              )}
+              <span className="serverError">{error && error.statusText ? error.statusText : null}</span>
             </div>
           </div>
         </div>
