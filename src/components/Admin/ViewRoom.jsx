@@ -13,7 +13,8 @@ export default function ManageRoom() {
   const [searchParam] = useSearchParams();
   const navigate = useNavigate();
 
-  const token = localStorage.getItem("token");
+  const tokenObj = JSON.parse(localStorage.getItem("token"));
+  const token = tokenObj ? tokenObj.token : null;
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -42,13 +43,13 @@ export default function ManageRoom() {
 
   const deleteUser = (index) => {
     axios
-      .delete(`http://127.0.0.1:8000/api/room/delete/${index}`)
+      .delete(`http://127.0.0.1:8000/api/room/delete/${index}`,{headers})
       .then((response) => {
         const del = response.data.success;
         setRoomDel(del);
         setRoom(null);
         setTimeout(() => {
-          navigate("/admin/rooms");
+          navigate("/admin/room");
         }, 3000);
       })
       .catch((error) => {
@@ -119,7 +120,8 @@ export default function ManageRoom() {
                   </tbody>
                 </table>
               )}
-              <span className="serverError">{error && error.statusText ? error.statusText : null}</span>
+              <p className="serverError">{error && error.data.errors.message ? error.data.errors.message : null}</p>
+              <p className="serverError">{error && error.statusText ? error.statusText : null}</p>
             </div>
           </div>
         </div>

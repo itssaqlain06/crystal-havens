@@ -32,7 +32,7 @@ export default function Login() {
                     "token",
                     JSON.stringify(response.data.success.authorization)
                 );
-                navigate('/')
+                navigate(-1)
             })
             .catch((error) => {
                 console.warn(error)

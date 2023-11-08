@@ -14,7 +14,8 @@ export default function ManageHotel() {
 
   const [searchParam] = useSearchParams();
 
-  const token = localStorage.getItem("token");
+  const tokenObj = JSON.parse(localStorage.getItem("token"));
+  const token = tokenObj ? tokenObj.token : null;
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -41,14 +42,19 @@ export default function ManageHotel() {
   }, [hotelId, searchParam]);
 
   const deleteUser = (index) => {
+    const tokenObj = JSON.parse(localStorage.getItem("token"));
+    const token = tokenObj ? tokenObj.token : null;
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
     axios
-      .delete(`http://127.0.0.1:8000/api/hotel/delete/${index}`)
+      .delete(`http://127.0.0.1:8000/api/hotel/delete/${index}`, { headers })
       .then((response) => {
         const del = response.data.success;
         setHotelDel(del);
         setHotel(null);
         setTimeout(() => {
-          navigate("/admin/hotels");
+          navigate("/admin/hotel");
         }, 3000);
       })
       .catch((error) => {
@@ -65,9 +71,9 @@ export default function ManageHotel() {
           <div className="col-sm-12 col-xl-12">
             <div className="bg-light rounded h-100 p-4">
               <h3 className="mb-4 text-color">View Hotel</h3>
-              <span className="delSuccess">
+              <p className="delSuccess">
                 {hotelDel && hotelDel.message ? hotelDel.message : null}
-              </span>
+              </p>
               {hotel !== null && (
                 <table className="table table-hover">
                   <thead>
@@ -120,7 +126,8 @@ export default function ManageHotel() {
                   </tbody>
                 </table>
               )}
-            <span className="serverError">{error && error.statusText ? error.statusText : null}</span>
+              <p className="serverError">{error && error.data.errors.message ? error.data.errors.message : null}</p>
+              <p className="serverError">{error && error.statusText ? error.statusText : null}</p>
             </div>
           </div>
         </div>

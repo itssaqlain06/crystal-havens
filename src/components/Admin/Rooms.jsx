@@ -10,7 +10,8 @@ export default function Rooms() {
   const [error, setError] = useState("");
   const navigate = useNavigate(null);
 
-  const token = localStorage.getItem("token");
+  const tokenObj = JSON.parse(localStorage.getItem("token"));
+  const token = tokenObj ? tokenObj.token : null;
   const headers = {
     Authorization: `Bearer ${token}`,
   };

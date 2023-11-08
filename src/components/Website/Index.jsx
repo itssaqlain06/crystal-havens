@@ -79,7 +79,7 @@ export default function Index() {
 
             <Room />
 
-            <div className="gallery">
+            {/* <div className="gallery">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
@@ -182,7 +182,7 @@ export default function Index() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <Contact />
 

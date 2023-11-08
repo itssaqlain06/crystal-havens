@@ -32,7 +32,8 @@ export default function UpdateHotel() {
 
   const [searchParam] = useSearchParams();
 
-  const token = localStorage.getItem("token");
+  const tokenObj = JSON.parse(localStorage.getItem("token"));
+  const token = tokenObj ? tokenObj.token : null;
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -56,7 +57,6 @@ export default function UpdateHotel() {
           setError(error.message);
         });
     }else{
-      alert("You")
       // navigate("/admin/hotel")
     }
   }, [hotelId, searchParam]);
@@ -74,13 +74,14 @@ export default function UpdateHotel() {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
+            Authorization: `Bearer ${token}`
           },
         }
       );
       if (response.ok) {
         let result = await response.json();
         setErrors({});
-        navigate('/admin/hotels');
+        navigate('/admin/hotel');
       } else {
         let failed = await response.json();
         setErrors(failed.errors || {});

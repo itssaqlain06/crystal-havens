@@ -10,12 +10,14 @@ export default function Hotels() {
   const [error, setError] = useState("");
   const navigate = useNavigate(null);
 
-  const token = localStorage.getItem("token");
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-
   useEffect(() => {
+
+    const tokenObj = JSON.parse(localStorage.getItem("token"));
+    const token = tokenObj ? tokenObj.token : null;
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
     axios
       .get("http://127.0.0.1:8000/api/hotel", { headers })
       .then((response) => {
@@ -37,7 +39,7 @@ export default function Hotels() {
     navigate("/admin/hotel/add");
   };
 
-  const updateHotels = ((id)=>{
+  const updateHotels = ((id) => {
     navigate(`/admin/hotel/update?${id}`);
   })
 
@@ -56,50 +58,50 @@ export default function Hotels() {
           <div className="col-sm-12 col-xl-12">
             <div className="bg-light rounded h-100 p-4">
               <h3 className="mb-4 text-color">Hotels</h3>
-              {hotels !=="" && (
+              {hotels !== "" && (
                 <table className="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {hotels !== null &&
-                    hotels.map((hotel, index) => (
-                      <tr key={index}>
-                        <th className="py-3" scope="row">
-                          {index + 1}
-                        </th>
-                        <td className="py-3">{hotel.name}</td>
-                        <td className="py-3">{hotel.email}</td>
-                        <td className="py-3">{hotel.phone}</td>
-                        <td>
-                          <button
-                            type="button"
-                            className="btn btn-outline-success m-2"
-                            onClick={() => viewHotels(hotel.id)}
-                          >
-                            View
-                          </button>
-                          <button
-                            type="button"
-                            className="btn btn-outline-warning m-2"
-                            onClick={() => updateHotels(hotel.id)}
-                          >
-                            Update
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Phone</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {hotels !== null &&
+                      hotels.map((hotel, index) => (
+                        <tr key={index}>
+                          <th className="py-3" scope="row">
+                            {index + 1}
+                          </th>
+                          <td className="py-3">{hotel.name}</td>
+                          <td className="py-3">{hotel.email}</td>
+                          <td className="py-3">{hotel.phone}</td>
+                          <td>
+                            <button
+                              type="button"
+                              className="btn btn-outline-success m-2"
+                              onClick={() => viewHotels(hotel.id)}
+                            >
+                              View
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-outline-warning m-2"
+                              onClick={() => updateHotels(hotel.id)}
+                            >
+                              Update
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
               )}
               <span className="serverError">{error && error.statusText ? error.statusText : null}</span>
-              
+
             </div>
           </div>
         </div>

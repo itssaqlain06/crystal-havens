@@ -1,8 +1,16 @@
+import axios from "axios";
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Header() {
   const navigate = useNavigate();
+
+  const tokenObj = JSON.parse(localStorage.getItem("token"));
+  const token = tokenObj ? tokenObj.token : null;
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -10,8 +18,16 @@ export default function Header() {
     }
   }, []);
   const logoutUser = () => {
-    localStorage.removeItem("token");
-    navigate("/admin/login");
+    // axios
+    //   .get("http://127.0.0.1:8000/api/user/logout", { headers })
+    //   .then((response) => {
+    //     console.log(response)
+    //     localStorage.removeItem("token");
+    //     navigate("/admin/login");
+    //   })
+    //   .catch((err) => {
+    //     console.warn(err)
+    //   })
   };
   return (
     <nav className="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
@@ -43,6 +59,9 @@ export default function Header() {
               Log Out
             </button>
           </div>
+          <button onClick={() => logoutUser()} className="dropdown-item">
+            Log Out
+          </button>
         </div>
       </div>
     </nav>

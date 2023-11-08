@@ -26,10 +26,12 @@ export default function UpdateRoom() {
 
   const [searchParam] = useSearchParams();
 
-  const token = localStorage.getItem("token");
+  const tokenObj = JSON.parse(localStorage.getItem("token"));
+  const token = tokenObj ? tokenObj.token : null;
   const headers = {
     Authorization: `Bearer ${token}`,
   };
+
 
   useEffect(() => {
     const param = searchParam.entries();
@@ -65,13 +67,14 @@ export default function UpdateRoom() {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
+            Authorization: `Bearer ${token}`
           },
         }
       );
       if (response.ok) {
         let result = await response.json();
         setErrors({});
-        navigate("/admin/rooms");
+        navigate("/admin/room");
       } else {
         let failed = await response.json();
         setErrors(failed.errors || {});

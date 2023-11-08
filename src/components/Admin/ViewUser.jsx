@@ -14,11 +14,6 @@ export default function ViewUser() {
 
   const [searchParam] = useSearchParams();
 
-  const token = localStorage.getItem("token");
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-
   useEffect(() => {
     const param = searchParam.entries();
     for (const [key, value] of param) {
@@ -27,28 +22,42 @@ export default function ViewUser() {
     if (userId) {
       const getUser = `http://127.0.0.1:8000/api/user/${userId}`;
 
+      const tokenObj = JSON.parse(localStorage.getItem("token"));
+      const token = tokenObj ? tokenObj.token : null;
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
       axios
-        .get(getUser, { headers })
+        .get(getUser, {headers})
         .then((response) => {
           const data = response.data.success.data;
           setUser(data);
           setError(null);
         })
         .catch((err) => {
+          console.log(err)
           setError(err.response);
         });
     }
   }, [userId, searchParam]);
 
   const deleteUser = (index) => {
+
+    const tokenObj = JSON.parse(localStorage.getItem("token"));
+    const token = tokenObj ? tokenObj.token : null;
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
     axios
-      .delete(`http://127.0.0.1:8000/api/user/delete/${index}`)
+      .delete(`http://127.0.0.1:8000/api/user/delete/${index}`,{headers})
       .then((response) => {
         const del = response.data.success;
         setUserDel(del);
         setUser(null);
         setTimeout(() => {
-          navigate("/admin/users");
+          navigate("/admin/user");
         }, 3000);
       })
       .catch((err) => {
@@ -65,9 +74,9 @@ export default function ViewUser() {
           <div className="col-sm-12 col-xl-12">
             <div className="bg-light rounded h-100 p-4">
               <h3 className="mb-4 text-color">View User</h3>
-              <span className="delSuccess">
+              <p className="delSuccess">
                 {userDel && userDel.message ? userDel.message : null}
-              </span>
+              </p>
               {user !== null && (
                 <table className="table table-hover">
                   <thead>
@@ -108,7 +117,8 @@ export default function ViewUser() {
                   </tbody>
                 </table>
               )}
-              <span className="serverError">{error && error.statusText ? error.statusText : null}</span>
+              <p className="serverError">{error && error.data.errors.message ? error.data.errors.message : null}</p>
+              <p className="serverError">{error && error.statusText ? error.statusText : null}</p>
             </div>
           </div>
         </div>

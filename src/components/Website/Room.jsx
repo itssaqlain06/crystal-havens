@@ -9,16 +9,21 @@ export default function Room() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
+    const tokenObj = JSON.parse(localStorage.getItem('token'));
+    const token = tokenObj ? tokenObj.token : null;
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+
     useEffect(() => {
         axios
-            .get("http://127.0.0.1:8000/api/room")
+            .get("http://127.0.0.1:8000/api/room", { headers })
             .then((response) => {
                 const data = response.data.success.details;
                 setRooms(data);
                 setError("");
             })
             .catch((err) => {
-                console.error(err);
                 setError(err.response);
                 setRooms([]);
             });

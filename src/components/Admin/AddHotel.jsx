@@ -20,6 +20,12 @@ export default function AddHotel() {
   const [errors, setErrors] = useState("");
   const navigate = useNavigate();
 
+  const tokenObj = JSON.parse(localStorage.getItem("token"));
+  const token = tokenObj ? tokenObj.token : null;
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
 
   const handleAddHotel = async () => {
     setErrors("");
@@ -43,6 +49,7 @@ export default function AddHotel() {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
+          Authorization: `Bearer ${token}`
         },
       });
       if (response.ok) {

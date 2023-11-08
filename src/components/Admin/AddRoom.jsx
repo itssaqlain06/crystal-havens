@@ -14,6 +14,12 @@ export default function AddRoom() {
   const [errors, setErrors] = useState("");
   const navigate = useNavigate();
 
+  const tokenObj = JSON.parse(localStorage.getItem("token"));
+  const token = tokenObj ? tokenObj.token : null;
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
   const handleAddHotel = async () => {
     const hotel_id = 1;
     const fields = {
@@ -31,17 +37,16 @@ export default function AddRoom() {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
+          Authorization: `Bearer ${token}`
         },
       });
       if (response.ok) {
         let result = await response.json();
-        console.log(result.success);
         setErrors("");
-        navigate("/admin/rooms");
+        navigate("/admin/room");
       } else {
         let failed = await response.json();
         setErrors(failed.errors);
-        console.log(failed.errors);
         setSuccess("");
       }
     } catch (error) {
