@@ -36,7 +36,6 @@ export default function Sidebar() {
               <div className="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
             </div>
             <div className="ms-3">
-              <h6 className="mb-0">Jhon Doe</h6>
               <span>Admin</span>
             </div>
           </div>
@@ -47,7 +46,7 @@ export default function Sidebar() {
                 currentLocation == "/admin" ? "active" : null
               }`}
             >
-              <i className="fa fa-tachometer-alt me-2"></i>Dashboard
+              <i className="fas fa-tachometer-alt me-2"></i>Dashboard
             </Link>
 
             <Link

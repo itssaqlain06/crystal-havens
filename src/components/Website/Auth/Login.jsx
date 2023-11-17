@@ -95,7 +95,7 @@ export default function Login() {
                                     {error && error.error ? error.error : null}<br/>
                                     {catchError && catchError.statusText ? catchError.statusText : null}
                                 </span>
-                                <div className="text-center mt-4">
+                                <div className="text-center">
                                     <p>Don't have an account? <Link to="/register" className="loginColor">Register</Link> here</p>
                                 </div>
                             </form>

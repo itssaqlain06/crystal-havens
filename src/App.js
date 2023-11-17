@@ -25,12 +25,11 @@ import Room from "./components/Website/Room";
 import Contact from "./components/Website/Contact";
 import Header from "./components/Website/layout/Header";
 import Footer from "./components/Website/layout/Footer";
-import AboutHeader from "./components/Website/headers/AboutHeader";
-import RoomHeader from "./components/Website/headers/RoomHeader";
-import ContactHeader from "./components/Website/headers/ContactHeader";
 import Registeration from "./components/Website/Auth/Registeration";
 import UserLogin from "./components/Website/Auth/Login";
 import RoomDetails from "./components/Website/RoomDetails";
+import Booking from "./components/Website/Booking";
+import AllHeaders from "./components/Website/headers/AllHeaders";
 
 function App() {
   return (
@@ -38,12 +37,13 @@ function App() {
       <Routes>
         {/* Website Routes */}
         <Route path="/" element={<Index />}></Route>
-        <Route path="/about" element={<><Header/><AboutHeader/><About /><Footer/></>}></Route>
-        <Route path="/room" element={<><Header/><RoomHeader/><Room /><Footer/></>}></Route>
-        <Route path="/room-details" element={<><Header/><RoomHeader/><RoomDetails /><Footer/></>}></Route>
-        <Route path="/contact" element={<><Header/><ContactHeader/><Contact /><Footer/></>}></Route>
+        <Route path="/about" element={<><Header/><AllHeaders/><About /><Footer/></>}></Route>
+        <Route path="/room" element={<><Header/><AllHeaders/><Room /><Footer/></>}></Route>
+        <Route path="/room-details" element={<><Header/><AllHeaders/><RoomDetails /><Footer/></>}></Route>
+        <Route path="/contact" element={<><Header/><AllHeaders/><Contact /><Footer/></>}></Route>
         <Route path="/register" element={<><Header/><Registeration/><Footer/></>}></Route>
         <Route path="/login" element={<><Header/><UserLogin/><Footer/></>}></Route>
+        <Route path="/booking" element={<><Header/><AllHeaders/><Booking/><Footer/></>}></Route>
 
         {/* Admin Routes */}
         <Route path="/admin" element={<><Sidebar /><Navbar /></>}></Route>

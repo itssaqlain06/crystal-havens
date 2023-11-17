@@ -27,7 +27,8 @@ export default function UpdateBooking() {
 
   const [searchParam] = useSearchParams();
 
-  const token = localStorage.getItem("token");
+  const tokenObj = JSON.parse(localStorage.getItem("token"));
+  const token = tokenObj ? tokenObj.token : null;
   const headers = {
     Authorization: `Bearer ${token}`,
   };

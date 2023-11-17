@@ -1,11 +1,33 @@
+import axios from 'axios';
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function Header() {
     const publicUrl = process.env.PUBLIC_URL + '/website_assets/images/';
 
     const location = useLocation();
     const currentLocation = location.pathname;
+
+    const tokenObj = JSON.parse(localStorage.getItem("token"));
+    const token = tokenObj ? tokenObj.token : null;
+    const navigate = useNavigate();
+
+
+    const logoutUser = () => {
+        axios
+            .post("http://127.0.0.1:8000/api/user/logout", null, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                localStorage.removeItem("token");
+                navigate("/login");
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
 
     return (
         <div className="header">
@@ -36,11 +58,18 @@ export default function Header() {
                                     <li className={`nav-item ${currentLocation && currentLocation === "/room" ? 'active' : null}`}>
                                         <Link className="nav-link" to="/room">Room</Link>
                                     </li>
+                                    <li className={`nav-item ${currentLocation && currentLocation === "/booking" ? 'active' : null}`}>
+                                        <Link className="nav-link" to="/booking">Booking</Link>
+                                    </li>
                                     <li className={`nav-item ${currentLocation && currentLocation === "/contact" ? 'active' : null}`}>
                                         <Link className="nav-link" to="/contact">Contact Us</Link>
                                     </li>
                                     <li className={`nav-item ${currentLocation && currentLocation === "/login" ? 'active' : null}`}>
-                                        <Link className="nav-link" to="/login">Login</Link>
+                                        {token ? (
+                                            <a href='javascript:void(0)' className="nav-link" onClick={logoutUser}>Logout</a>
+                                        ) : (
+                                            <Link className="nav-link" to='/login'>Login</Link>
+                                        )}
                                     </li>
                                 </ul>
                             </div>

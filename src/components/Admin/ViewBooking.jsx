@@ -15,7 +15,8 @@ export default function ViewBooking() {
   const [showToggleBooking, setShowToggleBooking] = useState(false);
   const [searchParam] = useSearchParams();
 
-  const token = localStorage.getItem("token");
+  const tokenObj = JSON.parse(localStorage.getItem("token"));
+  const token = tokenObj ? tokenObj.token : null;
   const headers = {
     Authorization: `Bearer ${token}`,
   };

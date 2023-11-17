@@ -45,7 +45,7 @@ export default function Index() {
                         <span className="sr-only">Next</span>
                     </a>
                 </div>
-                <div className="booking_ocline">
+                {/* <div className="booking_ocline">
                     <div className="container">
                         <div className="row">
                             <div className="col-md-5">
@@ -72,7 +72,7 @@ export default function Index() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </section>
 
             <About />

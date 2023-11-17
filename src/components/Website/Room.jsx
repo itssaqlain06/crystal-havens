@@ -36,7 +36,6 @@ export default function Room() {
                     <div className="col-md-12">
                         <div className="titlepage">
                             <h2>Our Room</h2>
-                            <p>Lorem Ipsum available, but the majority have suffered </p>
                         </div>
                     </div>
                 </div>

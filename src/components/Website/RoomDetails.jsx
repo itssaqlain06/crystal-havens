@@ -9,12 +9,13 @@ export default function RoomDetails() {
     const [error, setError] = useState(null);
     const [getRoomId, setGetRoomId] = useState(null);
     const [searchParam] = useSearchParams();
-    const [start_date, setStartDate] = useState(null)
-    const [end_date, setEndDate] = useState(null)
-    const [user_id, setUserId] = useState(null);
+    const [start_date, setStartDate] = useState('')
+    const [end_date, setEndDate] = useState('')
+    const [user_id, setUserId] = useState('');
     const [hotel_id, setHotelId] = useState(null);
     const [room_id, setRoomId] = useState(null);
-    const [number_of_guests, setNumberOfGuests] = useState(null);
+    const [number_of_guests, setNumberOfGuests] = useState('');
+    const [tokenDecodingError, SetTokenDecodingError] = useState(false);
     const navigate = useNavigate();
 
     const tokenObj = JSON.parse(localStorage.getItem("token"));
@@ -38,6 +39,7 @@ export default function RoomDetails() {
                     setHotelId(data.hotel_id);
                     setRoomId(data.id)
                     setError(null);
+                    SetTokenDecodingError(false);
                 })
                 .catch((err) => {
                     setError(err.response);
@@ -58,6 +60,10 @@ export default function RoomDetails() {
             })
             .catch((err) => {
                 setUserId(null)
+                const data = err.response.data.errors;
+                if (data.error === "Token decoding error") {
+                    SetTokenDecodingError(true);
+                }
             });
     }, []);
 
@@ -68,8 +74,11 @@ export default function RoomDetails() {
         if (!token) {
             navigate("/login")
         }
+        if (tokenDecodingError === true) {
+            navigate("/login")
+        }
         axios
-            .post("http://127.0.0.1:8000/api/reservation/store", {
+            .post("http://127.0.0.1:8000/api/booking/store", {
                 start_date: start_date,
                 end_date: end_date,
                 user_id: user_id,
@@ -78,14 +87,23 @@ export default function RoomDetails() {
                 number_of_guests: number_of_guests
             }, { headers })
             .then((response) => {
-                console.warn(response)
+                showToast();
             })
             .catch((err) => {
                 setError(err.response.data)
-                console.log(err)
             })
 
     }
+
+    const showToast = () => {
+        // Show the toast
+        const toastContainer = document.getElementById('toast-container');
+        toastContainer.style.display = 'block';
+
+        setTimeout(() => {
+            toastContainer.style.display = 'none';
+        }, 5000);
+    };
 
     return (
         <div className="our_room">
@@ -112,7 +130,7 @@ export default function RoomDetails() {
                                         <h2>Type: <span className='starColor'>{rooms.type.charAt(0).toUpperCase() + rooms.type.slice(1)}</span></h2>
                                     </>
                                 )}
-                                
+
                                 <div className="text-danger my-2">
                                     {[1, 2, 3, 4, 5].map((star) => (
                                         <i key={star} className="fa fa-star starColor fa-2x pr-1 cursor"></i>
@@ -178,7 +196,7 @@ export default function RoomDetails() {
                                                     value={number_of_guests}
                                                     onChange={(e) => setNumberOfGuests(e.target.value)}
                                                 >
-                                                    <option disabled>
+                                                    <option>
                                                         Guests
                                                     </option>
                                                     {Array.from({ length: rooms.capacity }, (_, i) => (
@@ -199,17 +217,16 @@ export default function RoomDetails() {
                                             {/* {error && error.errors.start_date && error.errors.end_date ? alert("done") : null} */}
                                         </span>
 
-                                        <button className="btn btn-danger btn-sm w-25 p-3 mt-4 webColor" type="submit" >Book Now</button>
+                                        <button className="btn btn-danger btn-sm w-25 p-3 mt-4 webColor" type="submit"  >Book Now</button>
                                     </form>
+                                    <Link to='/booking' id="toast-container" style={{ position: 'fixed', bottom: '20px', right: '20px', backgroundColor: '#0F1521', color: '#fff', padding: '15px', borderRadius: '5px', display: 'none', cursor: 'pointer' }}>
+                                        Booking made successfully. Click to see details.
+                                    </Link>
                                 </div>
-
-
-
                             </div>
                         )}
                     </div>
                 </div>
-
                 {rooms && (
                     <div className="row mt-4">
                         <div className="col-lg-12">
@@ -247,7 +264,6 @@ export default function RoomDetails() {
                         </div>
                     </div>
                 )}
-
                 {error && error.statusText && (
                     <div className="row">
                         <div className="col-lg-12">
@@ -255,7 +271,6 @@ export default function RoomDetails() {
                         </div>
                     </div>
                 )}
-
                 {rooms && (
                     <div className="row mt-4">
                         <div className="col-lg-12">
@@ -265,8 +280,6 @@ export default function RoomDetails() {
                     </div>
                 )}
             </section>
-
-
         </div>
     )
 }

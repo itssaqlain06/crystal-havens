@@ -15,9 +15,10 @@ export default function Footer() {
                             <div className=" col-md-4">
                                 <h3>Contact US</h3>
                                 <ul className="conta">
-                                    <li><i className="fa fa-map-marker" aria-hidden="true"></i> Address</li>
-                                    <li><i className="fa fa-mobile" aria-hidden="true"></i> +01 1234569540</li>
-                                    <li> <i className="fa fa-envelope" aria-hidden="true"></i><a href="#"> demo@gmail.com</a></li>
+                                    <li><i className="fa fa-map-marker" aria-hidden="true"></i> Okara, Punjab, Pakistan</li>
+                                    <li><i className="fa fa-mobile" aria-hidden="true"></i> +92-341-580-2244</li>
+                                    <li><i style={{ fontSize: '18px' }} className="fa fa-envelope" aria-hidden="true"></i><a href="mailto:itssaqlain06@gmail.com">itssaqlain06@gmail.com</a>
+                                    </li>
                                 </ul>
                             </div>
                             <div className="col-md-4">
@@ -26,20 +27,20 @@ export default function Footer() {
                                     <li className={`${currentLocation && currentLocation === "/" ? 'active' : null}`}><Link to="/">Home</Link></li>
                                     <li className={`${currentLocation && currentLocation === "/about" ? 'active' : null}`}><Link to="/about"> About</Link></li>
                                     <li className={`${currentLocation && currentLocation === "/room" ? 'active' : null}`}><Link to="/room">Room</Link></li>
+                                    <li className={`${currentLocation && currentLocation === "/booking" ? 'active' : null}`}><Link to="/booking">Booking</Link></li>
                                     <li className={`${currentLocation && currentLocation === "/contact" ? 'active' : null}`}><Link to="/contact">Contact Us</Link></li>
                                 </ul>
                             </div>
                             <div className="col-md-4">
                                 <h3>News letter</h3>
-                                <form className="bottom_form">
+                                <div className="bottom_form">
                                     <input className="enter" placeholder="Enter your email" type="text" name="Enter your email" />
                                     <button className="sub_btn">subscribe</button>
-                                </form>
+                                </div>
                                 <ul className="social_icon">
-                                    <li><a href="#"><i className="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i className="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i className="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i className="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i className="fab fa-instagram" aria-hidden="true"></i></a></li>
+                                    <li><a target='_blank' href="https://www.linkedin.com/in/itssaqlain06/"><i className="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                    <li><a href="https://github.com/itssaqlain06/"><i className="fa fa-github" aria-hidden="true"></i></a></li>
                                 </ul>
                             </div>
                         </div>

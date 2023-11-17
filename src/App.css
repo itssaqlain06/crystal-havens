@@ -99,3 +99,15 @@ h2 {
 .cursor:hover {
   cursor: pointer;
 }
+#toast-container {
+  transition: 0.2s ease-in-out;
+}
+
+#toast-container:hover {
+  background: #fe0000 !important;
+  transition: 0.2s ease-in-out;
+}
+
+.table-no-top-border thead th {
+  border-top: none !important;
+}

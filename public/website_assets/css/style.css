@@ -382,7 +382,7 @@ button {
 .book_btn:hover {
      background-color: #fff;
      color: #fe0000;
-     transition: ease-in 0.5s;
+     transition: ease-in 0.2s;
 }
 
 .carousel-control-next,
@@ -455,7 +455,7 @@ button {
 .read_more:hover {
      background: #fe0000;
      color: #fff;
-     transition: ease-in all 0.5s;
+     transition: ease-in all 0.2s;
 }
 
 /** about section **/
@@ -560,8 +560,8 @@ button {
 
 #serv_hover:hover.room {
      cursor: pointer;
-     box-shadow: 0px 0px 30px rgba(255, 9, 9, 0.15);
-     transition: ease-in all 0.5s;
+     box-shadow: 0px 0px 30px grey;
+     transition: ease-in all 0.2s;
 }
 
 
@@ -697,7 +697,7 @@ button {
      color: #000000;
      font-size: 18px;
      font-weight: normal;
-     box-shadow: 2px 0px 6px rgba(255, 9, 9, 0.20);
+     box-shadow: 0px 0px 2px grey;
 }
 
 .main_form .textarea {
@@ -709,13 +709,13 @@ button {
      font-size: 18px;
      font-weight: normal;
      padding: 12px 15px 0 15px;
-     box-shadow: 2px 0px 6px rgba(255, 9, 9, 0.20);
-     height: 150px;
+     box-shadow: 0px 0px 2px grey;
+     height: 200px;
 }
 
 .main_form .send_btn {
      font-size: 22px;
-     transition: ease-in all 0.5s;
+     transition: ease-in all 0.2s;
      background-color: #000000;
      text-transform: uppercase;
      color: #fff;
@@ -730,7 +730,7 @@ button {
 
 .main_form .send_btn:hover {
      background-color: #ff0909;
-     transition: ease-in all 0.5s;
+     transition: ease-in all 0.2s;
      color: #fff;
 }
 
@@ -856,7 +856,7 @@ ul.link_menu li a:hover {
 
 .sub_btn:hover {
      background-color: #ff0909;
-     transition: ease-in all 0.5s;
+     transition: ease-in all 0.2s;
      color: #fff;
 }
 

@@ -27,7 +27,8 @@ export default function UpdateReservation() {
 
   const [searchParam] = useSearchParams();
 
-  const token = localStorage.getItem("token");
+  const tokenObj = JSON.parse(localStorage.getItem("token"));
+  const token = tokenObj ? tokenObj.token : null;
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -163,7 +164,7 @@ export default function UpdateReservation() {
                     <span className="loginErrors">
                       {errors && errors.payment_status ? errors.payment_status : null}
                     </span>
-                  </div>    
+                  </div>
                   <div className="form-floating mb-3">
                     <input
                       onChange={(e) =>
@@ -179,7 +180,7 @@ export default function UpdateReservation() {
                     <span className="loginErrors">
                       {errors && errors.start_date ? errors.start_date : null}
                     </span>
-                  </div>    
+                  </div>
                   <div className="form-floating mb-3">
                     <input
                       onChange={(e) =>
@@ -195,9 +196,9 @@ export default function UpdateReservation() {
                     <span className="loginErrors">
                       {errors && errors.end_date ? errors.end_date : null}
                     </span>
-                  </div>                         
-                    <span className="loginErrors">{errors && errors.message ? errors.message : null}</span>
-                    <span className="loginErrors">{errors.error && errors.error.end_date ? errors.error.end_date : null}</span>
+                  </div>
+                  <span className="loginErrors">{errors && errors.message ? errors.message : null}</span>
+                  <span className="loginErrors">{errors.error && errors.error.end_date ? errors.error.end_date : null}</span>
 
                   {/* Update button */}
                   <div className="form-floating">
